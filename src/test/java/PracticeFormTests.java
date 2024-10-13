@@ -9,7 +9,7 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static com.codeborne.selenide.Selenide.open;
 
-public class PracticeForm {
+public class PracticeFormTests {
 
     @BeforeAll
     static void beforeAll() {
