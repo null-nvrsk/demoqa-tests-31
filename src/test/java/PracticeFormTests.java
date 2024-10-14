@@ -1,13 +1,12 @@
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.SelenideElement;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.Condition.appear;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
 
 public class PracticeFormTests {
 
@@ -15,81 +14,85 @@ public class PracticeFormTests {
     static void beforeAll() {
         Configuration.baseUrl = "https://demoqa.com";
         Configuration.browserPosition = "0x0";
-        Configuration.browserSize = "1920x1080";
+        Configuration.browserSize = "1280x720";
         Configuration.pageLoadStrategy = "eager";
     }
 
     @Test
     void successRegistrationTest() {
-        final String FIRST_NAME = "John";
-        final String LAST_NAME = "Smith";
-        final String USER_EMAIL = "johnsmith@gmail.com";
-        final String USER_GENDER = "Male";
-        final String USER_NUMBER = "8001234567";
-        final String USER_BIRTH_HEAR = "1985";
-        final String USER_BIRTH_MONTH = "August";
-        final String USER_BIRTH_DAY = "30";
+        String firstName = "John";
+        String lastName = "Smith";
+        String userEmail = "johnsmith@gmail.com";
+        String userGender = "Male";
+        String userNumber = "8001234567";
+        String userBirthYear = "1985";
+        String userBirthMonth = "August";
+        String userBirthDay = "30";
 
-        final String SUBJECT1 = "Maths";
-        final String SUBJECT2 = "Biology";
-        final String SUBJECT3 = "Computer Science";
+        String subject1 = "Maths";
+        String subject2 = "Biology";
+        String subject3 = "Computer Science";
 
-        final String HOBBY1 = "Reading";
-        final String HOBBY2 = "Music";
+        String hobby1 = "Reading";
+        String hobby2 = "Music";
 
-        final String CURRENT_ADDRESS = "1195 Borregas Drive";
-        final String STATE = "Uttar Pradesh";
-        final String CITY = "Lucknow";
+        String pictureFileName = "avatar.png";
+
+        String currentAddress = "1195 Borregas Drive";
+        String state = "Uttar Pradesh";
+        String city = "Lucknow";
 
         open("/automation-practice-form");
 
+        executeJavaScript("$('#fixedban').remove()");
+        executeJavaScript("$('footer').remove()");
+
         $(".practice-form-wrapper h5").shouldHave(text("Student Registration Form"));
 
-        $("#firstName").setValue(FIRST_NAME);
-        $("#lastName").setValue(LAST_NAME);
-        $("#userEmail").setValue(USER_EMAIL);
+        $("#firstName").setValue(firstName);
+        $("#lastName").setValue(lastName);
+        $("#userEmail").setValue(userEmail);
 
-        $("#genterWrapper").$(byText(USER_GENDER)).click();
+        $("#genterWrapper").$(byText(userGender)).click();
 
-        $("#userNumber").setValue(USER_NUMBER);
+        $("#userNumber").setValue(userNumber);
 
         $("#dateOfBirthInput").click();
-        $(".react-datepicker__year-select").selectOption(USER_BIRTH_HEAR);
-        $(".react-datepicker__month-select").selectOption(USER_BIRTH_MONTH);
+        $(".react-datepicker__year-select").selectOption(userBirthYear);
+        $(".react-datepicker__month-select").selectOption(userBirthMonth);
 
-        $$(".react-datepicker__day:not(.react-datepicker__day--outside-month)").findBy(text(USER_BIRTH_DAY)).click();
+        $$(".react-datepicker__day:not(.react-datepicker__day--outside-month)").findBy(text(userBirthDay)).click();
 
-        $("#subjectsInput").setValue(SUBJECT1).pressTab(); // Maths
-        $("#subjectsInput").setValue(SUBJECT2).pressTab(); // Biology
-        $("#subjectsInput").setValue(SUBJECT3).pressTab(); // Computer Science
-        $("#hobbiesWrapper").$(byText(HOBBY1)).click();
-        $("#hobbiesWrapper").$(byText(HOBBY2)).click();
+        $("#subjectsInput").setValue(subject1).pressTab(); // Maths
+        $("#subjectsInput").setValue(subject2).pressTab(); // Biology
+        $("#subjectsInput").setValue(subject3).pressTab(); // Computer Science
+        $("#hobbiesWrapper").$(byText(hobby1)).click();
+        $("#hobbiesWrapper").$(byText(hobby2)).click();
 
-        $("#uploadPicture").uploadFromClasspath("avatar.png");
+        $("#uploadPicture").uploadFromClasspath(pictureFileName);
 
-        $("#currentAddress").setValue(CURRENT_ADDRESS);
+        $("#currentAddress").setValue(currentAddress);
 
         $("#state").click();
-        $("#stateCity-wrapper").$(byText(STATE)).click();
+        $("#stateCity-wrapper").$(byText(state)).click();
 
         $("#city").click();
-        $("#stateCity-wrapper").$(byText(CITY)).click();
+        $("#stateCity-wrapper").$(byText(city)).click();
 
         $("button#submit").click();
 
         $(".modal-content").should(appear);
         $(".modal-content .h4").shouldHave(text("Thanks for submitting the form"));
 
-        $(".modal-body .table-responsive").shouldHave(
-                text(FIRST_NAME), text(LAST_NAME),
-                text(USER_EMAIL),
-                text(USER_GENDER),
-                text(USER_NUMBER),
-                text(USER_BIRTH_DAY), text(USER_BIRTH_MONTH), text(USER_BIRTH_HEAR),
-                text(SUBJECT1), text(SUBJECT2), text(SUBJECT3),
-                text(HOBBY1), text(HOBBY2),
-                text("avatar.png"),
-                text(CURRENT_ADDRESS), text(STATE), text(CITY)
-        );
+        SelenideElement tableModal = $(".modal-body .table-responsive");
+        tableModal.shouldHave(text(firstName), text(lastName));
+        tableModal.shouldHave(text(userEmail));
+        tableModal.shouldHave(text(userGender));
+        tableModal.shouldHave(text(userNumber));
+        tableModal.shouldHave(text(userBirthDay), text(userBirthMonth), text(userBirthYear));
+        tableModal.shouldHave(text(subject1), text(subject2), text(subject3));
+        tableModal.shouldHave(text(hobby1), text(hobby2));
+        tableModal.shouldHave(text(pictureFileName));
+        tableModal.shouldHave(text(currentAddress), text(state), text(city));
     }
 }
