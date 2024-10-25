@@ -28,10 +28,10 @@ public class RegistrationPage {
 
     public RegistrationPage openPage() {
         open("/automation-practice-form");
-
-        $(".practice-form-wrapper h5").shouldHave(text(formTitle));
         executeJavaScript("$('#fixedban').remove()");
         executeJavaScript("$('footer').remove()");
+
+        $(".practice-form-wrapper h5").shouldHave(text(formTitle));
         return this;
     }
 
