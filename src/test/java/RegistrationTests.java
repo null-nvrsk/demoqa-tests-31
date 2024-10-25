@@ -25,8 +25,7 @@ public class RegistrationTests extends BaseTest {
     @Test
     void successRegistrationTest() {
 
-        registrationPage
-                .openPage()
+        registrationPage.openPage()
                 .setFirstName(firstName)
                 .setLastName(lastName)
                 .setEmail(userEmail)
@@ -57,8 +56,7 @@ public class RegistrationTests extends BaseTest {
     @Test
     void minimalRequiredRegistrationTest() {
 
-        registrationPage
-                .openPage()
+        registrationPage.openPage()
                 .setFirstName(firstName)
                 .setLastName(lastName)
                 .setGender(userGender)
@@ -75,8 +73,7 @@ public class RegistrationTests extends BaseTest {
     @Test
     void invalidEmailRegistrationTest() {
 
-        registrationPage
-                .openPage()
+        registrationPage.openPage()
                 .setFirstName(firstName)
                 .setLastName(lastName)
                 .setEmail(invalidEmail)
