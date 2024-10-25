@@ -4,7 +4,7 @@ import com.codeborne.selenide.SelenideElement;
 import pages.components.CalendarComponent;
 import pages.components.RegistrationResultsModal;
 
-import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
@@ -107,5 +107,10 @@ public class RegistrationPage {
         registrationResultsModal.verifyResult(key, value);
         return this;
     }
+
+    public RegistrationPage verifyEmailErrorNotification() {
+        emailInput.shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
+        return this;
+    };
 
 }
