@@ -47,20 +47,20 @@ public class TextBoxPage {
     public TextBoxPage verifyUserName(String name) {
         $("#output #name").shouldHave(text(name));
         return this;
-    };
+    }
 
     public TextBoxPage verifyEmail(String email) {
         $("#output #email").shouldHave(text(email));
         return this;
-    };
+    }
 
     public TextBoxPage verifyCurrentAddress(String currentAddress) {
         $("#output #currentAddress").shouldHave(text(currentAddress));
         return this;
-    };
+    }
 
     public TextBoxPage verifyPermanentAddress(String permanentAddress) {
         $("#output #permanentAddress").shouldHave(text(permanentAddress));
         return this;
-    };
+    }
 }
